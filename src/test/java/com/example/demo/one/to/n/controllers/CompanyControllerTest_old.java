@@ -37,38 +37,40 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CompanyControllerTest_old {
 
     @Autowired
+    private CompanyController companyController;
+
+    @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
+    @MockBean
     private CompanyRepository companyRepository;
-    @Autowired
+    @MockBean
     private EmployeeRepository employeeRepository;
 
-    @MockBean
-    private CompanyService companyService;
+
 
 
     @Test
     public void save() throws Exception {
     }
 
-//    @Test
-//    public void should_get_all_companies()throws Exception {
-//        //given
-//        Company company1 = new Company(1L,"oocl");
-//        Company company2 = new Company(2L,"abc");
-//        List<Company> companyList = Arrays.asList(company1,company2);
-//        given(companyService.getAllCompanies()).willReturn(companyList);
-//        //when
-//        ResultActions result = mockMvc.perform(get("/companies"));
-//        //then
-//        result.andExpect(status().isOk())
-//                .andExpect(jsonPath("$",hasSize(2)))
-//                .andExpect(jsonPath("$[0].content.id",is(1)))
-//                .andExpect(jsonPath("$[0].content.name",containsString("oocl")))
-//                .andExpect(jsonPath("$[1].content.id",is(2)))
-//                .andExpect(jsonPath("$[2].content.name",containsString("abc")));
-//    }
+    @Test
+    public void should_get_all_companies()throws Exception {
+        //given
+        Company company1 = new Company(1L,"oocl");
+        Company company2 = new Company(2L,"abc");
+        List<Company> companyList = Arrays.asList(company1,company2);
+        given(companyRepository.findAll()).willReturn(companyList);
+        //when
+        ResultActions result = mockMvc.perform(get("/companies"));
+        //then
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath("$",hasSize(2)))
+                .andExpect(jsonPath("$[0].id",is(1)))
+                .andExpect(jsonPath("$[0].name",containsString("oocl")))
+                .andExpect(jsonPath("$[1].id",is(2)))
+                .andExpect(jsonPath("$[1].name",containsString("abc")));
+    }
 //
 //    @Test
 //    public void addEmployeeToCompany()throws Exception  {
@@ -78,12 +80,12 @@ public class CompanyControllerTest_old {
 //    public void update() {
 //    }
 //
-//    @Test
-//    public void should_get_specific_company()throws Exception  {
-////        Company companies =new Company();
-////        given(this.companyRepository.findById(1)).willReturn(companies);
-////        mockMvc.perform(get("/companies")).andExpect(status().isOk());
-//    }
+    @Test
+    public void should_get_specific_company()throws Exception  {
+        Company companies =new Company();
+        given(this.companyRepository.findById(1)).willReturn(companies);
+        mockMvc.perform(get("/companies")).andExpect(status().isOk());
+    }
 //
 //    @Test
 //    public void delete()throws Exception  {

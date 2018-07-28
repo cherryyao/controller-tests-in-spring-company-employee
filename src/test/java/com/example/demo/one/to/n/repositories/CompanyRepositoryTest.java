@@ -54,14 +54,10 @@ public class CompanyRepositoryTest {
         entityManager.persist(new Company("abc"));
         //when
         Long id = Long.valueOf(entityManager.persistAndGetId(new Company("oocl2")).toString());
-        System.out.println(id);
         int deletedStatus = companyRepository.deleteCompanyById(id);
-
-        //int deletedStatus1 = companyRepository.deleteCompanyById(5L);
         //then
         assertThat(deletedStatus,is(1));
-       // assertThat(deletedStatus1,is(0));
-        assertThat(companyRepository.findAll().size(),is(1));
+        assertThat(companyRepository.findAll().size(),is(3));
 
     }
     @Test
