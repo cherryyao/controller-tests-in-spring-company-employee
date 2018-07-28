@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -42,6 +43,39 @@ public class CompanyRepositoryTest {
         //then
         assertThat(company1.getId(),is(1L));
         assertThat(company2.getId(),is(2L));
+    }
+
+    @Test
+    public void deleteCompanyById(){
+        //given
+        entityManager.clear();
+        entityManager.persist(new Company("oocl"));
+        entityManager.persist(new Company("abc"));
+        entityManager.persist(new Company("abc"));
+        //when
+        Long id = Long.valueOf(entityManager.persistAndGetId(new Company("oocl2")).toString());
+        System.out.println(id);
+        int deletedStatus = companyRepository.deleteCompanyById(id);
+
+        //int deletedStatus1 = companyRepository.deleteCompanyById(5L);
+        //then
+        assertThat(deletedStatus,is(1));
+       // assertThat(deletedStatus1,is(0));
+        assertThat(companyRepository.findAll().size(),is(1));
+
+    }
+    @Test
+    public void findAllCompany(){
+        //given
+        entityManager.persist(new Company("oocl"));
+        entityManager.persist(new Company("abc"));
+
+        //when
+        List<Company> companyList =companyRepository.findAll();
+        //then
+        assertThat(companyList.size(),is(2));
+        assertThat(companyList.get(0).getName(),is("oocl"));
+        assertThat(companyList.get(1).getName(),is("abc"));
     }
 
 
