@@ -20,6 +20,7 @@ import java.util.List;
 @RequestMapping("/companies")
 public class CompanyController {
 
+
     @Autowired
     private CompanyRepository companyRepository;
 
@@ -81,7 +82,7 @@ public class CompanyController {
     @Transactional
     @GetMapping(path = "/{company_id}/employees", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getSpecificCompanyEmployee(@PathVariable long company_id){
-        Company company = companyRepository.findById(company_id).get();
+        Company company = companyRepository.findById(company_id);
         System.out.println(company.getEmployeesList());
         return company.getEmployeesList();
     }
