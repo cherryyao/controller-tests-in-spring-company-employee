@@ -1,0 +1,5 @@
+CREATE TABLE `klass`(
+    `id` BIGINT  NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `num` int NOT NULL,
+    `created_date` TIMESTAMP DEFAULT NOW()
+);
